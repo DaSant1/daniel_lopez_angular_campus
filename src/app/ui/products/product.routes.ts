@@ -12,5 +12,6 @@ export const productRoutes: Routes = [
   {
     path: ':action/:id',
     loadComponent: () => import('./upsert/upsert.component').then(m => m.UpsertComponent)
-  }
+  },
+  {path: '**', redirectTo: 'products' }
 ]

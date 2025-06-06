@@ -7,4 +7,5 @@ export const routes: Routes = [
     children:productRoutes
   },
   {path:'',redirectTo:'products',pathMatch:'full'},
+  {path: '**', redirectTo: 'products' }
 ];
