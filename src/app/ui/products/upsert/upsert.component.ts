@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -87,10 +87,10 @@ export class UpsertComponent implements OnInit{
 
   private _initForm():void{
        this.productForm = this.fb.group({
-      id: [null],
-      name: [''],
+      id: [],
+      name: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       description: [''],
-      price: [0],
+      price: [0,[Validators.required,Validators.min(0.01)]],
       isAvailable: [true]
     });
   }
