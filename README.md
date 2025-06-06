@@ -45,10 +45,10 @@ Sigue los pasos a continuación para poner en marcha el proyecto en tu entorno l
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/DaSant1/localdb.git
+git clone https://github.com/DaSant1/daniel_lopez_angular_campus.git
 
 # Acceder al directorio del proyecto
-cd localdb
+cd daniel_lopez_angular_campus
 
 # Instalar dependencias
 npm install
