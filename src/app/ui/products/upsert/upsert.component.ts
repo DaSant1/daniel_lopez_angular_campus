@@ -52,7 +52,6 @@ export class UpsertComponent implements OnInit{
   private _getContextCallingLink():void{
     this.activeRoute.paramMap.subscribe(params=>{
       this.contextAction=params.get('action') !;
-      console.log("contextAction: ", this.contextAction);
       this.isEditingMode = this.contextAction === 'edit';
 
     });
