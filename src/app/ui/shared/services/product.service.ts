@@ -25,14 +25,17 @@ export class ProductService {
 
   }
   async addProduct(product: product_model): Promise<number | null> {
-    try{
-      return await this.product_table.add(product); //Añade un producto a la tabla 'products' y devuelve su id
+
+   try{
+      const productToAdd={...product}
+     delete productToAdd.id;
+      return await this.product_table.add(productToAdd); //Añade un producto a la tabla 'products' y devuelve su id
     }catch(error) {
       return null;
     }
   }
 
   async delete(id:number){
-    await this.product_table.delete(id); //Elimina un producto de la tabla 'products' por su id 
+    await this.product_table.delete(id); //Elimina un producto de la tabla 'products' por su id
   }
 }

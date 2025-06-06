@@ -36,8 +36,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class ListComponent implements OnInit{
   public isMobileView: boolean = false;
-  public displayedColumns: string[] = ['id', 'name', 'description', 'price', 'isAvailable', 'actions'];
-  public dataSource: MatTableDataSource<product_model> = new MatTableDataSource<product_model>([]);
+   displayedColumns: string[] = ['id', 'name', 'description', 'price', 'isAvailable', 'actions'];
+   dataSource: MatTableDataSource<product_model> = new MatTableDataSource<product_model>([]);
 
   constructor(private productService:ProductService,
               private breakpointObserver: BreakpointObserver,
@@ -47,7 +47,7 @@ export class ListComponent implements OnInit{
   products:product_model[] = [];
   ngOnInit(): void {
     this.productService.getAllProducts().then((products) => this.products = products);
-
+    this._getProducts();
     this._canUseResponsiveMode();
   }
 
@@ -58,6 +58,13 @@ export class ListComponent implements OnInit{
     ]).subscribe(result => {
       this.isMobileView = result.matches;
     })
+  }
+
+  private _getProducts():void{
+    this.productService.getAllProducts().then((products) => {
+      this.products = products;
+      this.dataSource.data = products;
+    });
   }
 
 

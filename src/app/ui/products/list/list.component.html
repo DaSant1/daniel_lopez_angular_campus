@@ -9,51 +9,53 @@
 
     <mat-card-content>
       <div class="controls-section">
-
         <div class="action-section">
-            <button mat-raised-button color="primary" >
-                <mat-icon>add</mat-icon>
-                <span class="button-text">Agregar Producto</span>
-            </button>
+          <button mat-raised-button color="primary">
+            <mat-icon>add</mat-icon>
+            <span class="button-text">Agregar Producto</span>
+          </button>
         </div>
-
       </div>
 
       <!-- Product list desktop view-->
-       <div class="desktop-view" *ngIf="!isMobileView">
+      <div class="desktop-view" *ngIf="!isMobileView">
         <mat-table [dataSource]="products" matSort class="products-table">
-          <!--id-->
+
+          <!-- ID Column -->
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-            <mat-cell *matCellDef="let product"> {{product.id}} </mat-cell>
+            <mat-cell *matCellDef="let product">{{product.id}}</mat-cell>
           </ng-container>
 
-          <!--product-name -->
+          <!-- Name Column -->
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del Producto</mat-header-cell>
-            <mat-cell *matCellDef="let product"> {{product.name}} </mat-cell>
+            <mat-cell *matCellDef="let product">{{product.name}}</mat-cell>
           </ng-container>
 
-          <!--description-->
-          <ng-container >
-            <ng-container matColumnDef="description">Descripcion</ng-container>
+          <!-- Description Column - CORREGIDO -->
+          <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
-            <mat-cell *matCellDef="let product"> {{product.description}} </mat-cell>
+            <mat-cell *matCellDef="let product">{{product.description}}</mat-cell>
           </ng-container>
 
-          <!--price-->
+          <!-- Price Column -->
           <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
-            <mat-cell *matCellDef="let product"> {{product.price | currency}} </mat-cell>
+            <mat-cell *matCellDef="let product">{{product.price | currency}}</mat-cell>
           </ng-container>
 
-          <!--is Available?-->
+          <!-- Available Column -->
           <ng-container matColumnDef="isAvailable">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Disponible</mat-header-cell>
-            <mat-cell *matCellDef="let product"> {{product.isAvailable ? 'Sí' : 'No'}} </mat-cell>
+            <mat-cell *matCellDef="let product">
+              <mat-chip [class]="product.isAvailable ? 'available' : 'unavailable'">
+                {{product.isAvailable ? 'Sí' : 'No'}}
+              </mat-chip>
+            </mat-cell>
           </ng-container>
 
-          <!--actions-->
+          <!-- Actions Column -->
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
             <mat-cell *matCellDef="let product">
@@ -66,40 +68,48 @@
             </mat-cell>
           </ng-container>
 
+          <!-- Header and Row Definitions -->
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
-       </div>
+      </div>
 
-       <!--movile View-->
-       <div class="mobile-view" *ngIf="isMobileView">
+      <!-- Mobile View -->
+      <div class="mobile-view" *ngIf="isMobileView">
         <div class="mobile-cards">
           <mat-card class="product-card" *ngFor="let product of products">
             <mat-card-header>
-
               <mat-card-title>
                 <div class="card-title">
-                <span> {{product.name}} </span>
-                <mat-chip [class]="product.isAvailable ? 'available' : 'unavailable'">
-                  {{product.isAvailable ? 'Disponible' : 'No Disponible'}}
-                </mat-chip>
+                  <span>{{product.name}}</span>
+                  <mat-chip [class]="product.isAvailable ? 'available' : 'unavailable'">
+                    {{product.isAvailable ? 'Disponible' : 'No Disponible'}}
+                  </mat-chip>
                 </div>
               </mat-card-title>
             </mat-card-header>
 
             <mat-card-content>
               <div class="card-content">
-                <p class="product-description"> {{product.description}}</p>
+                <p class="product-description">{{product.description}}</p>
                 <div class="product-details">
                   <div class="product-price">
                     <span>Precio: {{product.price | currency}}</span>
                   </div>
                 </div>
+                <div class="mobile-actions">
+                  <button mat-icon-button color="primary" >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
               </div>
             </mat-card-content>
           </mat-card>
         </div>
-       </div>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

@@ -1,5 +1,5 @@
 export interface product_model{
-  id:number;
+  id?:number;
   name:string;
   description?:string;
   price:number;
