@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import Dexie from 'dexie';
-import { product_model } from '../../ui/shared/models/product.model';
 import { dbSchema } from '../../../localdb/db-schema';
+import { product_model } from '../../ui/shared/models/product.model';
+
 
 @Injectable({
   providedIn: 'root'

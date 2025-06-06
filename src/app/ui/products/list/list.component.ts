@@ -35,13 +35,30 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrl: './list.component.css'
 })
 export class ListComponent implements OnInit{
+  public isMobileView: boolean = false;
+  public displayedColumns: string[] = ['id', 'name', 'description', 'price', 'isAvailable', 'actions'];
+  public dataSource: MatTableDataSource<product_model> = new MatTableDataSource<product_model>([]);
 
-  constructor(private productService:ProductService){}
+  constructor(private productService:ProductService,
+              private breakpointObserver: BreakpointObserver,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar
+  ){}
   products:product_model[] = [];
   ngOnInit(): void {
     this.productService.getAllProducts().then((products) => this.products = products);
+
+    this._canUseResponsiveMode();
   }
 
+  private _canUseResponsiveMode():void{
+    this.breakpointObserver.observe([
+      Breakpoints.Handset,
+      Breakpoints.TabletPortrait
+    ]).subscribe(result => {
+      this.isMobileView = result.matches;
+    })
+  }
 
 
 
