@@ -59,9 +59,6 @@ export class UpsertComponent implements OnInit{
     this.activeRoute.queryParamMap.subscribe(queryParam=>{
       this.idParam = this.activeRoute.snapshot.paramMap.get('id');
     });
-    console.log("contextAction: ", this.contextAction);
-    console.log("isEditingMode: ", this.isEditingMode);
-    console.log("idParam: ", this.idParam);
     if(this.isEditingMode && this.idParam){
       this.contextName="Editar"
       this._getProductById(this.idParam);
