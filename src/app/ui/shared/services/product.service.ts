@@ -35,8 +35,16 @@ export class ProductService {
     }
   }
 
-  async delete(id:number){
-    await this.product_table.delete(id); //Elimina un producto de la tabla 'products' por su id
+  async delete(id:number): Promise<void | null> {
+    try{
+      if(id=== undefined){
+        throw new Error('Se requiere idProducto');
+      }
+      await this.product_table.delete(id); //Elimina un producto de la tabla 'products' por su id
+    }catch (error) {
+      return null;
+    }
+
   }
 
   async updateProduct(product: product_model): Promise<void> {
