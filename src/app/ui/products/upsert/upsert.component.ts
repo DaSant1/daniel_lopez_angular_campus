@@ -116,7 +116,7 @@ export class UpsertComponent implements OnInit{
           duration: 3000,
           panelClass: ['success-snackbar']
         });
-        //this.productForm.reset();
+        this.productForm.reset();
         this.productForm.patchValue({isAvailable: true});
       },(error)=>{
         this.snackBar.open('Error al crear el producto.', 'Cerrar', {
@@ -140,6 +140,7 @@ export class UpsertComponent implements OnInit{
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.productForm.reset();
       },(error)=>{
         this.snackBar.open('Error al actualizar el producto.', 'Cerrar', {
           duration: 3000,
