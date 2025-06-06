@@ -10,7 +10,7 @@ export const productRoutes: Routes = [
     loadComponent: () => import('./upsert/upsert.component').then(m => m.UpsertComponent)
   },
   {
-    path: 'edit/:id',
+    path: ':action/:id',
     loadComponent: () => import('./upsert/upsert.component').then(m => m.UpsertComponent)
   }
 ]

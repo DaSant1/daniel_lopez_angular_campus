@@ -38,4 +38,17 @@ export class ProductService {
   async delete(id:number){
     await this.product_table.delete(id); //Elimina un producto de la tabla 'products' por su id
   }
+
+  async updateProduct(product: product_model): Promise<void> {
+    try {
+      if (product.id === undefined) {
+        throw new Error('Product id is undefined');
+      }
+      const productToUpdate = { ...product };
+      delete productToUpdate.id;
+      await this.product_table.update(product.id, productToUpdate); //Actualiza un producto de la tabla 'products' por su id
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
 }

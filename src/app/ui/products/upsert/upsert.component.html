@@ -1,10 +1,16 @@
 <mat-card class="product-card">
   <mat-card-header>
-    <mat-card-title> {{contextName}} Producto</mat-card-title>
+    <div class="header-container">
+      <button mat-icon-button (click)="backToProductsList()" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-card-title> {{contextName}} Producto</mat-card-title>
+    </div>
+
   </mat-card-header>
 
   <mat-card-content>
-    <form [formGroup]="productForm" (ngSubmit)="createProduct()" >
+    <form [formGroup]="productForm" (ngSubmit)="coordinateUpsert()" >
       <div class="form-row">
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Nombre</mat-label>

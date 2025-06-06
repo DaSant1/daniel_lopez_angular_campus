@@ -10,7 +10,7 @@ import { DbProductService } from '../../../core/service/db-product.service';
 import { ProductService } from '../../shared/services/product.service';
 import { CommonModule } from '@angular/common';
 import { MatPseudoCheckboxModule } from '@angular/material/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { query } from '@angular/animations';
 import { product_model } from '../../shared/models/product.model';
 @Component({
@@ -41,6 +41,7 @@ export class UpsertComponent implements OnInit{
               private fb: FormBuilder,
               private productService:ProductService,
               private activeRoute: ActivatedRoute,
+              private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -50,15 +51,17 @@ export class UpsertComponent implements OnInit{
 
   private _getContextCallingLink():void{
     this.activeRoute.paramMap.subscribe(params=>{
-      this.contextAction=params.get('action') || 'create';
-      this.isEditingMode = this.contextAction === 'update';
+      this.contextAction=params.get('action') !;
+      console.log("contextAction: ", this.contextAction);
+      this.isEditingMode = this.contextAction === 'edit';
 
     });
-
     this.activeRoute.queryParamMap.subscribe(queryParam=>{
-      this.idParam=queryParam.get('id');
+      this.idParam = this.activeRoute.snapshot.paramMap.get('id');
     });
-
+    console.log("contextAction: ", this.contextAction);
+    console.log("isEditingMode: ", this.isEditingMode);
+    console.log("idParam: ", this.idParam);
     if(this.isEditingMode && this.idParam){
       this.contextName="Editar"
       this._getProductById(this.idParam);
@@ -96,7 +99,16 @@ export class UpsertComponent implements OnInit{
     });
   }
 
-  createProduct():void{
+  coordinateUpsert():void{
+    if(this.isEditingMode){
+      this._updateProduct();
+    }else{
+      this._createProduct();
+    }
+  }
+
+
+  private _createProduct():void{
     if(this.productForm.valid){
       const newProduct: product_model = {...this.productForm.value};
       this.productService.addProduct(newProduct).then(()=>{
@@ -120,5 +132,30 @@ export class UpsertComponent implements OnInit{
     }
   }
 
+  private _updateProduct():void{
+    if(this.productForm.valid && this.product){
+      const updatedProduct: product_model = {...this.productForm.value, id: this.product.id};
+      this.productService.updateProduct(updatedProduct).then(()=>{
+        this.snackBar.open('Producto actualizado exitosamente.', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+      },(error)=>{
+        this.snackBar.open('Error al actualizar el producto.', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
+      })
+    }else{
+      this.snackBar.open('Por favor, completa todos los campos requeridos.', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+    }
+  }
+
+  backToProductsList():void{
+    this.router.navigate(['/products']);
+  }
 
 }
